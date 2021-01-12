@@ -1,0 +1,39 @@
+- name: Create Database service 
+  k8s:
+    kubeconfig: "{{ kube_config.stdout }}"
+    api_version: v1
+    namespace: default
+    definition:
+      kind: Deployment
+      metadata:
+        name: mongo
+      spec:
+        selector:
+          matchLabels:
+            app: mongo
+        template:
+          metadata:
+            labels:
+              app: mongo
+          spec:
+            containers:
+              - name: mongo
+                image: mongo
+                ports:
+                  - containerPort: 27017
+
+- name: Mongo Service 
+  k8s:
+    kubeconfig: "{{ kube_config.stdout }}"
+    api_version: v1
+    namespace: default
+    definition:
+      kind: Service
+      metadata:
+        name: mongo
+      spec:
+        selector:
+          app: mongo
+        ports:
+          - port: 27017
+            targetPort: 27017

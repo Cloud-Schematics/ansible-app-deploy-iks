@@ -1,0 +1,45 @@
+- name: Create Web Application
+  k8s:
+    kubeconfig: "{{ kube_config.stdout }}"
+    api_version: v1
+    namespace: default
+    definition:
+      kind: Deployment
+      metadata:
+        name: knote
+      spec:
+        replicas: 1
+        selector:
+          matchLabels:
+            app: knote
+        template:
+          metadata:
+            labels:
+              app: knote
+          spec:
+            containers:
+              - name: app
+                image: rvsingh011/hackathon-starter_web
+                ports:
+                  - containerPort: 8080
+                env:
+                  - name: MONGODB_URI
+                    value: mongodb://mongo:27017/test
+                imagePullPolicy: Always
+
+- name: Create web service 
+  k8s:
+    kubeconfig: "{{ kube_config.stdout }}"
+    api_version: v1
+    namespace: default
+    definition:
+      kind: Service
+      metadata:
+        name: knote
+      spec:
+        selector:
+          app: knote
+        ports:
+          - port: 80
+            targetPort: 8080
+        type: LoadBalancer 

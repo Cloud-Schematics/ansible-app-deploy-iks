@@ -1,94 +1,19 @@
 ---
 
-- hosts: all
-  tasks:
-
-  - set_fact:    
-      mongo_db: "{{ hostvars[ item ].ansible_host }}"
-    with_items: "{{groups['backend']}}"
-
-- name: Install and configure mongodb 
-  hosts: backend
+- hosts: localhost
   vars:
-    mongodb_net_bindip: "{{ mongo_db }}"
+    temp_path: /tmp
+  pre_tasks:
+  - set_fact:
+      zip_path: /tmp/kubeConfig-{{ cluster_id }}.zip
+      kube_config_path: /tmp/kubeConfig-{{ cluster_id }}
+      IC_IAM_TOKEN: "{{ lookup('env','IC_IAM_TOKEN') }}"
+      IC_IAM_REFRESH_TOKEN: "{{ lookup('env','IC_IAM_REFRESH_TOKEN') }}"
+
+- name: apply common configuration to all nodes
+  hosts: localhost
   roles:
-    - role: undergreen.mongodb
-
-- name: Install and configure nodejs
-  hosts: frontend
-  roles:
-    - role: geerlingguy.nodejs
-
-- name: Install and configure nginx
-  hosts: frontend
-
-  roles:
-    - role: geerlingguy.nginx
-- hosts: frontend
-  tasks:
-  - name: install git
-    yum: 
-      name: git
-      state: latest
-  - name: install git
-    yum: 
-      name: gcc-c++
-      state: latest    
-  - name: download app from git repo 
-    git:
-      repo: "https://github.com/sahat/hackathon-starter.git"
-      dest: "/usr/local/hackathon-starter"
-      version: "6.0.0"
-      force: yes
-      accept_hostkey: yes
-    become: no
-  - name: npm install 
-    become: yes
-    command: "npm install"
-    args:
-      chdir: /usr/local/hackathon-starter
-
-
-- name: Install and configure hackathon-starter
-  hosts: frontend
-  tasks:
-  - name: install pm2 
-    become: yes
-    command: "npm install -g pm2"
-    args:
-      chdir: /usr/local/hackathon-starter  
-
-  - name: Check if App is already running
-    failed_when: false
-    become: no
-    command: pm2 show hackathon-starter
-    register: pm2_contents
-
-  - name: Check if App is already running
-    failed_when: false
-    become: no
-    command: pm2 show hackathon-starter
-    register: pm2_contents
-
-  - name: starting Hackathon-starter 
-    environment:
-      MONGODB_URI: "mongodb://{{ mongo_db }}:27017/test"
-    command: pm2 start app.js --name hackathon-starter
-    when: pm2_contents.stdout.find('online') == -1
-    args:
-      chdir: /usr/local/hackathon-starter
-   
-  - name: restarting Hackathon-starter 
-    environment:
-      MONGODB_URI: "mongodb://{{ mongo_db }}:27017/test"
-    command: pm2 restart app.js --name hackathon-starter
-    when: pm2_contents.stdout.find('online') != -1
-    args:
-      chdir: /usr/local/hackathon-starter
-
-  - name: Setting startup Hackathon-starter 
-    command: pm2 startup 
-    args:
-      chdir: /usr/local/hackathon-starter
-
+    - role: set-kube-config
+    - role: web
+    - role: db
 
