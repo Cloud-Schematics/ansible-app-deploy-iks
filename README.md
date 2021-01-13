@@ -19,7 +19,7 @@ Github URL: https://github.com/sahat/hackathon-starter/blob/master/README.md
             "git_repo_url": "https://github.com/Cloud-Schematics/ansible-app-deploy-iks.git"
        }
   },
-  "command_parameter": "site.yaml",
+  "command_parameter": "site.yml",
   "tags": [
     "string"
   ],
