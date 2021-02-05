@@ -7,7 +7,7 @@ Github URL: https://github.com/sahat/hackathon-starter/blob/master/README.md
 
 ### Prerequisite
 
-1. A cluster which has the a public IP available and exposed to access the application. 
+1.  IBM Cloud Kubernetes cluster
 
     The following cluster template was used to create the example. https://github.com/terraform-ibm-modules/terraform-ibm-cluster/tree/master/modules/classic-kubernetes-single-zone
 
