@@ -6,16 +6,16 @@
     definition:
       kind: Deployment
       metadata:
-        name: knote
+        name: webapp
       spec:
         replicas: 1
         selector:
           matchLabels:
-            app: knote
+            app: webapp
         template:
           metadata:
             labels:
-              app: knote
+              app: webapp
           spec:
             containers:
               - name: app
@@ -35,10 +35,10 @@
     definition:
       kind: Service
       metadata:
-        name: knote
+        name: webapp-service
       spec:
         selector:
-          app: knote
+          app: webapp
         ports:
           - port: 80
             targetPort: 8080
