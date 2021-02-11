@@ -64,7 +64,7 @@ Github URL: https://github.com/sahat/hackathon-starter/blob/master/README.md
 }
 ```
 
-3. Once the job complete browse the application on the public IP.
+3. Once the job complete browse the application on the public IP of webapp service in your kubernetes cluster.
 
 ![](./welcome_screen.png)
 
@@ -72,8 +72,8 @@ Github URL: https://github.com/sahat/hackathon-starter/blob/master/README.md
   
 ## Run the ansible playbook using Schematics UI
 
-In this example, we will use the Schematics Actions UI to create a new `Start VSI` Action, using the `start-vsi-playbook.yml` playbook.  
-Further, use the Schematics Job API to run the newly created `Start VSI` action.
+In this example, we will use the Schematics Actions UI to create a new `Hackathon Starter` Action, using the `site.yml` playbook.  
+Further, use the Schematics Job API to run the newly created `Hackathon Starter` action.
 
 Steps:
 
@@ -87,8 +87,12 @@ Steps:
   * Github url : https://github.com/Cloud-Schematics/ansible-app-deploy-iks.git
   * Click on `Retrieve playbooks` button
   * Select `site.yml` from the dropdown
+- Login to IBM CLI using terminal
+  * Run `ibmcloud iam oauth-tokens` to get `IAM token` and `Refresh token`.
 - In the Create action page - Advanced options, provide the following input
   * Add `cluster_id` as key and `<cluster id of Cluster>` as value
+  * Add `IC_IAM_TOKEN` as key and `<IAM token>` from earlier step as value. 
+  * Add `IC_IAM_REFRESH_TOKEN` as key and `<Refresh token>` from earlier step as value.
 - Press the `Next` button, and wait for the newly created `Hackathon-Starter` action to move to `Normal` state.
 - Once the `Hackathon-Starter` action is in `Normal` state, you can run press the `Run action` button to initiate the Schematics Job
   * You can view the job status and the job logs (or Ansible logs) in the Jobs page of the `Hackathon-Starter` Schematics Action
@@ -122,11 +126,13 @@ For debugging purpose create action with verbose settings.
   ]
   ```
 
-###  How to check the home page IP Address for the application?
+###  How to get the public IP of webapp service in your kubernetes cluster?
 
-1. Run the below command to find the IP address.
-`kubectl describe svc webapp`
-2. Find the field `LoadBalancer Ingress`. 
+1. Login to IBM Cloud account on CLI. 
+2. Run `ic ks clusters` to list all cluster. 
+3. Run `ic ks cluster config -c <ClusterID>` to set kubectl context. 
+4. Run `kubectl describe svc webapp` to get details about webapp service. 
+5. Find the field `LoadBalancer Ingress` to get the external IP. 
 
 ### Why my load balancer does not have a public IP? 
 This can be because of subnet or network policies which were used while cluster creation. 
