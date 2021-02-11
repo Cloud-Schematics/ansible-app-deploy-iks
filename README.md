@@ -1,6 +1,6 @@
 # Hackathon Starter Ansible Playbook
 
-This playbook demonstrae how to use the Ansible to deploy the Hackathon Starter, A boilerplate for Node.js web applications to IKS cluster using ansible k8 roles. 
+This playbook demonstrate how to use the Ansible to deploy the Hackathon Starter, A boilerplate for Node.js web applications to IKS cluster using ansible k8 roles. 
 Github URL: https://github.com/sahat/hackathon-starter/blob/master/README.md
 
 ## Steps to run with IBM Cloud Schematics. 
@@ -9,11 +9,20 @@ Github URL: https://github.com/sahat/hackathon-starter/blob/master/README.md
 
 1.  IBM Cloud Kubernetes cluster
 
-    The following cluster template was used to create the example. https://github.com/terraform-ibm-modules/terraform-ibm-cluster/tree/master/modules/classic-kubernetes-single-zone
+    Steps to provision cluster
+    
+    * Login to your IBM Account
+    * Select Kubernetes -> clusters from the navigation menu. (https://cloud.ibm.com/kubernetes/clusters)
+    * Select `Create Cluster`. 
+    * Select `Pricing Plan` as `Standard`, `Infrastructure` as `Classic`. 
+    * Select `Location` and `Worker Zone` as per your choice.
+    * Select `Availability` as `SingleZone`. 
+    * Select `Worker nodes per zone` as `1`. 
+    * Give the required `Cluster name` and click `Create`.
 
 ### Run the ansible playbook using Schematics CLI.
 
-1. Create `action.json` with `Action` defination. Edit the payload as per your defination and run IBM Cloud CLI `ibmcloud schematics action create -f action.json`
+1. Create `action.json` with `Action` definition. Edit the payload as per your definition and run IBM Cloud CLI `ibmcloud schematics action create -f action.json`
 
 ```
 {
@@ -34,10 +43,10 @@ Github URL: https://github.com/sahat/hackathon-starter/blob/master/README.md
   "inputs": [
     {
       "name": "cluster_id",
-      "value": <You-Cluster-ID>,
+      "value": "<You-Cluster-ID>",
       "metadata": {
         "type": "string",
-        "default_value": <Your-Default-Cluster-ID>
+        "default_value": "<Your-Default-Cluster-ID>"
       }
     }
   ],
@@ -45,12 +54,12 @@ Github URL: https://github.com/sahat/hackathon-starter/blob/master/README.md
 }
 ```
 
-2. Create Job to run the above action. Create `job.json` with `job` defination. Edit the `Action ID` from step 1 and run `ibmcloud schematics job create -f payload.json`
+2. Create Job to run the above action. Create `job.json` with `job` definition. Edit the `Action ID` from step 1 and run `ibmcloud schematics job create -f payload.json`
 
 ```
 {
   "command_object": "action",
-  "command_object_id": <Action-ID>,
+  "command_object_id": "<Action-ID>",
   "command_name": "ansible_playbook_run"
 }
 ```
@@ -121,3 +130,6 @@ For debugging purpose create action with verbose settings.
 
 ### Why my load balancer does not have a public IP? 
 This can be because of subnet or network policies which were used while cluster creation. 
+
+### Why I am getting error `Action Name Should be Unique`?
+In schematics no two action can have the same name in an account. Please change the action name. 
