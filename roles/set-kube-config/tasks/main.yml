@@ -3,6 +3,7 @@
       url: https://containers.cloud.ibm.com/global/v1/clusters/{{ cluster_id }}/config
       dest: "{{ zip_path }}"
       force: yes
+      timeout: 40
       headers: 
         Authorization: '{{ IC_IAM_TOKEN }}'
         X-Auth-Refresh-Token: '{{ IC_IAM_REFRESH_TOKEN }}'
