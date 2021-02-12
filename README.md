@@ -88,7 +88,8 @@ Steps:
   * Click on `Retrieve playbooks` button
   * Select `site.yml` from the dropdown
 - Login to IBM CLI using terminal
-  * Run `ibmcloud iam oauth-tokens` to get `IAM token` and `Refresh token`.
+  * Run `ibmcloud iam oauth-tokens` to get `IC_IAM_TOKEN`. 
+  * Check `~/.bluemix/config.json` for `IC_IAM_REFRESH_TOKEN`.
 - In the Create action page - Advanced options, provide the following input
   * Add `cluster_id` as key and `<cluster id of Cluster>` as value
   * Add `IC_IAM_TOKEN` as key and `<IAM token>` from earlier step as value. 
