@@ -1,11 +1,13 @@
 # Hackathon Starter Ansible Playbook
 
-This playbook demonstrate how to use the Ansible to deploy the Hackathon Starter, A boilerplate for Node.js web applications to IKS cluster using ansible k8 roles. 
-Github URL: https://github.com/sahat/hackathon-starter/blob/master/README.md
+Deploying Hackathon Starter application to IBM Cloud Kubernetes cluster.
 
-## Steps to run with IBM Cloud Schematics. 
 
-### Prerequisite
+## About this playbook
+
+This playbook demonstrate how to use the Ansible to deploy the Hackathon Starter, A boilerplate for Node.js web applications to IKS cluster using ansible k8 roles.
+
+## Prerequisites
 
 1.  IBM Cloud Kubernetes cluster
 
@@ -20,87 +22,80 @@ Github URL: https://github.com/sahat/hackathon-starter/blob/master/README.md
     * Select `Worker nodes per zone` as `1`. 
     * Give the required `Cluster name` and click `Create`.
 
-### Run the ansible playbook using Schematics CLI.
+## Input variables
 
-1. Create `action.json` with `Action` definition. Edit the payload as per your definition and run IBM Cloud CLI `ibmcloud schematics action create -f action.json`
+|Input variable|Required/ optional|Data type|Description|
+|--|--|--|--|
+|cluster_id|Required|String|ID of the cluster in IBM cloud account|
 
-```
-{
-  "name": "Hackathon_Starter_Action",
-  "description": "This Action will deploy boiler plate code for Hackathon Starter",
-  "location": "us-east",
-  "resource_group": "Default",
-   "source": {
-       "source_type" : "git",
-       "git" : {
-            "git_repo_url": "https://github.com/Cloud-Schematics/ansible-app-deploy-iks.git"
-       }
-  },
-  "command_parameter": "site.yml",
-  "tags": [
-    "string"
-  ],
-  "inputs": [
-    {
-      "name": "cluster_id",
-      "value": "<You-Cluster-ID>",
-      "metadata": {
-        "type": "string",
-        "default_value": "<Your-Default-Cluster-ID>"
-      }
-    }
-  ],
-  "source_type": "GitHub" 
-}
-```
+## Running the playbook in Schematics by using UI
 
-2. Create Job to run the above action. Create `job.json` with `job` definition. Edit the `Action ID` from step 1 and run `ibmcloud schematics job create -f payload.json`
+1. Open the [Schematics action configuration page](https://cloud.ibm.com/schematics/actions/create?name=deployapp&url=https://github.com/Cloud-Schematics/ansible-app-deploy-iks).
+2. Review the name for your action, and the resource group and region where you want to create the action. Then, click **Create**.
+3. Select the `site.yml` playbook.
+4. Select the **Verbosity** level to control the depth of information that will be shown when you run the playbook in Schematics.
+5. Expand the **Advanced options**.
+6. Enter all required input variables as key-value pairs. Then, click **Next**.
+7. Click **Check action** to verify your action details. The **Jobs** page opens automatically. You can view the results of this check by looking at the logs.
+8. Click **Run action** to deploy the Hackathon Starter. You can monitor the progress of this action by reviewing the logs on the **Jobs** page.
 
-```
-{
-  "command_object": "action",
-  "command_object_id": "<Action-ID>",
-  "command_name": "ansible_playbook_run"
-}
-```
+## Running the playbook in Schematics by using the command line
 
-3. Once the job complete browse the application on the public IP of webapp service in your kubernetes cluster.
+1. Create the Schematics action. Enter all the input variable values that you retrieved earlier. When you run this command and are prompted to enter a GitHub token, enter the return key to skip this prompt.
+   ```
+   ibmcloud schematics action create --name deployapp --location us-south --resource-group default --template https://github.com/Cloud-Schematics/ansible-app-deploy-iks --playbook-name site.yml --input "mysql_port": "<mysql_port>" --input "httpd_port": "<httpd_port>" --input "dbuser": "<dbuser>" --input "upassword": "<db_password>"
+   ```
 
-![](./welcome_screen.png)
+   Example output:
+   ```
+   Enter github-token>
+   The given --inputs option region: is not correctly specified. Must be a variable name and value separated by an equals sign, like --inputs key=value.
 
+   ID               us-south.ACTION.deployapp.1aa11a1a
+   Name             deployapp
+   Description
+   Resource Group   default
+   user State       live
 
-  
-## Run the ansible playbook using Schematics UI
+   OK
+   ```
 
-In this example, we will use the Schematics Actions UI to create a new `Hackathon Starter` Action, using the `site.yml` playbook.  
-Further, use the Schematics Job API to run the newly created `Hackathon Starter` action.
+2. Verify that your Schematics action is created and note the ID that was assigned to your action.
+   ```
+   ibmcloud schematics action list
+   ```
 
-Steps:
+3. Create a job to run a check for your action. Replace `<action_ID>` with the action ID that you retrieved. In your CLI output, note the **ID** that was assigned to your job.
+   ```
+   ibmcloud schematics job create --command-object action --command-object-id <action_ID> --command-name ansible_playbook_check
+   ```
 
-- Open https://cloud.ibm.com/schematics/actions to view the list of Schematics Actions.
-- Click `Create action` button to create a new Schematics Action definition
-- In the Create action page - section 1, provide the following inputs, to create a `Hackathon-Starter` action in `Draft` state.
-  * Action name : Hackathon Starter
-  * Resource group: default
-  * Location : us-east
-- In the Create action page - section 2, provide the following input
-  * Github url : https://github.com/Cloud-Schematics/ansible-app-deploy-iks.git
-  * Click on `Retrieve playbooks` button
-  * Select `site.yml` from the dropdown
-- Login to IBM CLI using terminal
-  * Run `ibmcloud iam oauth-tokens` to get `IC_IAM_TOKEN`. 
-  * Check `~/.bluemix/config.json` for `IC_IAM_REFRESH_TOKEN`.
-- In the Create action page - Advanced options, provide the following input
-  * Add `cluster_id` as key and `<cluster id of Cluster>` as value
-  * Add `IC_IAM_TOKEN` as key and `<IAM token>` from earlier step as value. 
-  * Add `IC_IAM_REFRESH_TOKEN` as key and `<Refresh token>` from earlier step as value.
-- Press the `Next` button, and wait for the newly created `Hackathon-Starter` action to move to `Normal` state.
-- Once the `Hackathon-Starter` action is in `Normal` state, you can run press the `Run action` button to initiate the Schematics Job
-  * You can view the job status and the job logs (or Ansible logs) in the Jobs page of the `Hackathon-Starter` Schematics Action
-  * Jobs page of the `Hackathon-Starter` Schematics Action will list all the historical jobs that was executed using this Action definition
+   Example output:
+   ```
+   ID                  us-south.JOB.deployapp.fedd2fab
+   Command Object      action
+   Command Object ID   us-south.ACTION.deployapp.1aa11a1a
+   Command Name        ansible_playbook_check
+   Name                JOB.deployapp.ansible_playbook_check.2
+   Resource Group      a1a12aaad12b123bbd1d12ab1a123ca1
+   ```
 
+4. Verify that your job ran successfully by retrieving the logs.
+   ```
+   ibmcloud schematics job logs --id <job_ID>
+   ```
 
-## FAQ
+5. Create another job to run the action. Replace `<action_ID>` with your action ID.
+   ```
+   ibmcloud schematics job create --command-object action --command-object-id <action_ID> --command-name ansible_playbook_run
+   ```
+
+6. Verify that your job ran successfully by retrieving the logs.
+   ```
+   ibmcloud schematics job logs --id <job_ID>
+   ```
+
+## Troubleshooting
 
 ### How to debug and get verbose logs while running actions?
 
@@ -140,3 +135,27 @@ This can be because of subnet or network policies which were used while cluster 
 
 ### Why I am getting error `Action Name Should be Unique`?
 In schematics no two action can have the same name in an account. Please change the action name. 
+
+
+
+## Verification
+
+Browse the application on the public IP of webapp service in your kubernetes cluster.
+
+![](./welcome_screen.png)
+
+## Delete an action
+
+1. From the [Schematics actions dashboard](https://cloud.ibm.com/schematics/actions){: external}, find the action that you want to delete.
+2. From the actions menu, click **Delete**.
+
+## Reference
+
+Review the following links to find more information about Schematics and Hackathon Starter
+
+- [IBM Cloud Schematics documentation](https://cloud.ibm.com/docs/schematics)
+- [Hackathon Starter](https://github.com/sahat/hackathon-starter/blob/master/README.md)
+
+## Getting help
+
+For help and support with using this template in IBM Cloud Schematics, see [Getting help and support](https://cloud.ibm.com/docs/schematics?topic=schematics-schematics-help).
