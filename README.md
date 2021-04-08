@@ -42,7 +42,7 @@ This playbook demonstrate how to use the Ansible playbook in IBM Cloud Schematic
 5. Click **Retrieve playbook** button to view the playbook list.
 6. Select the `site.yml` playbook.
 7. Select the **Verbosity** level to control the depth of log information to display. For example, enter `4` to check detailed log information. Refer to [create an action](https://cloud.ibm.com/docs/schematics?topic=schematics-action-setup#create-action) for more information.
-5. Click the **Advanced options** tab.
+5. Click the **Advanced options** tab. then click **Add input value** to add the variables.
 6. Enter the input variables in the **Key** and **Value** format. Check **Sensitive**, to protect the text value.
 
 | Key | Value |
