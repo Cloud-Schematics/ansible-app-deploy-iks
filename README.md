@@ -1,8 +1,8 @@
 # Automating web application deployment on IBM Cloud Kubernetes Service
 
-IBM Cloud Schematics actions uses Hackathon Starter web application to create an Ansible playbook template. Ansible playbook is preconfigured with the tools and softwares required to deploy the Hackathon Starter application. All that you need to do is create an IBM Cloud cluster, create indentity and access management (IAM) and IAM refresh token to use the powerful Ansible playbook to deploy.
+IBM Cloud Schematics actions uses Hackathon Starter web application to create an Ansible playbook template. Ansible playbook is preconfigured with the tools and softwares required to deploy the Hackathon Starter application. All that you need to do is create an IBM Cloud cluster, create Indentity and Access Management (IAM) and IAM refresh token to use the powerful Ansible playbook to automate the web application deployment by using IBM Cloud Kubernetes Service and Schematics action.
 
-[Hackathon Starter](https://github.com/sahat/hackathon-starter) is a web application developed by using Node.js, MongoDB, command line tools supporting multiple Operating System. This application is boilerplate web application for Node.js and distributed by using Git clone. 
+[Hackathon Starter](https://github.com/sahat/hackathon-starter) is a web application developed by using Node.js, MongoDB, command line tools supporting multiple Operating System. This application is boilerplate web application for Node.js and distributed by using Git. 
 
 ## About this playbook
 
