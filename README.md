@@ -44,12 +44,12 @@ This playbook demonstrate how to use the Ansible playbook in IBM Cloud Schematic
 7. Select the **Verbosity** level to control the depth of log information to display. For example, enter `4` to check detailed log information. Refer to [create an action](https://cloud.ibm.com/docs/schematics?topic=schematics-action-setup#create-action) for more information.
 5. Click the **Advanced options** tab.
 6. Enter the input variables in the **Key** and **Value** format. Check **Sensitive**, if you want to protect the text value.
- | Key | Value |
- | ---- | ---- |
- | cluster_id | <Enter your cluster ID> |
- | IC_IAM_TOKEN | <Enter your IAM token> |
- | IC_IAM_REFRESH_TOKEN | <Enter your Refresh token> |
-   ![Sample input variables](/images/iks_inputvariables.png)
+| Key | Value |
+| ---- | ---- |
+| cluster_id | <Enter your cluster ID> |
+| IC_IAM_TOKEN | <Enter your IAM token> |
+| IC_IAM_REFRESH_TOKEN | <Enter your Refresh token> |
+![Sample input variables](/images/iks_inputvariables.png)
 7. Click **Save**.
 8. Click **Check action** validates your action details.
 9. Click **Run action** to deploy the Hackathon Starter. You can monitor the progress of an action by reviewing the logs on the **Jobs** page.
@@ -60,17 +60,17 @@ To verify your deployment, continue with verification steps.
 
 1. From the IBM Cloud **Kubernetes > Cluster** console page, click your cluster name.
 2. Click the **Kubernetes dashboard** button to view the  **Kubernetes Overview** page.
-3. Select **Services > Services** to view the **External endpoint** for your webapp service. 
+3. Select **Services > Services** to view the **External Endpoints** for your webapp-service. 
 
 **Sample screen capture**
 
 ![External endpoint for webapp service](/images/external_ip_webapp.png)
 
-4. Click the external link icon to view your Hackathon Starter application page. Or optionally, browse the Hackathon Starter web application by using your `External endpoint` IP address, for example,https://155.155.155.155 to view the output as shown in the screen capture.
+4. Click the external link icon to view your web application page. Or optionally, browse by using your `External endpoint` IP address, for example, `https://155.155.155.155` to view the output as shown in the screen capture.
 
 **Sample output**
 
-![Hackathon Starter web application](/images/hackathon_webapp.png)
+![Successfully deployed web application](/images/hackathon_webapp.png)
 
 ## Running the playbook in Schematics by using the command line
 
@@ -80,7 +80,7 @@ To verify your deployment, continue with verification steps.
    ```
    ibmcloud schematics action create --name testdeployapp2 --location us-south --resource-group Default --template https://github.com/Cloud-Schematics/ansible-app-deploy-iks --playbook-name site.yml  --input cluster_id=123456 --input IC_IAM_TOKEN=Bearer 123123adsfadfa123123 --input IC_IAM_REFRESH_TOKEN=asdfadsf123etsdfds131234
    ```
-2. Run the command, you are prompted to **Enter github-token**, enter the return or enter key to skip this prompt to view the action creation output. If you find any error, see `Troubleshooting` section to debug.
+2. Run the command, you are prompted to **Enter github-token**, enter the return key to skip this prompt. Your action is created and action ID details are displayed. If you find any error, see `Troubleshooting` section to debug.
 
    **Example output**
    ```
@@ -113,7 +113,7 @@ To verify your deployment, continue with verification steps.
 
 ## Verification
 
-You can view the webapp service details that are created in your Cluster ID. Follow these command to view the webapp service and external IP to access the Hackathon web application.
+You can view the webapp service details that are created in your Cluster ID. Follow these command to view the webapp service and external IP address or external endpoints to access your deployed web application.
 
 1. Login to IBM Cloud account on command, where you have created the clusters.
 2. Run `ic ks clusters` to list all cluster to view the output in this format.
@@ -143,9 +143,9 @@ You can view the webapp service details that are created in your Cluster ID. Fol
    Events:                   <none>
    ```
 5. From the `kubectl describe svc webapp` output, note the value of the `LoadBalancer Ingress` variable is generated. This IP address the external endpoint to test  Hackathon Starter web application.
-6. Browse the Hackathon Starter web application by using your `LoadBalancer Ingress` IP address, for example, https://155.155.155.155 to view the output as shown in the screen capture.
+6. Browse by using your `LoadBalancer Ingress` IP address, for example, https://155.155.155.155 to view the output as shown in the screen capture.
 
-![Hackathon Starter web application](/images/hackathon_webapp.png)
+![Successfully deployed web application](/images/hackathon_webapp.png)
 
 ## Troubleshooting
 
