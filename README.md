@@ -54,8 +54,8 @@ This playbook demonstrate how to use the Ansible playbook in IBM Cloud Schematic
 ![Sample input variables](/images/iks_inputvariables.png)
 
 7. Click **Save**.
-8. Click **Check action** validates your action details.
-9. Click **Run action** to deploy the Hackathon Starter. You can monitor the progress of an action by reviewing the logs on the **Jobs** page.
+8. Click **Check action** validates your action details. In case of any issues, you can recheck the configuration and [edit the settings](https://cloud.ibm.com/docs/schematics?topic=schematics-action-setup#action-settings) and recheck an action.
+9. Click **Run action** to deploy the Hackathon Starter. You can monitor the progress of an action from the [job logs](https://cloud.ibm.com/docs/schematics?topic=schematics-action-setup#action-jobs) from the Jobs page.
 
 To verify your deployment, continue with verification steps.
 
@@ -95,7 +95,7 @@ To verify your deployment, continue with verification steps.
 
    OK
    ```
-2. Verify that your Schematics action is created and note your action ID that is assigned to your action. Also you can run following list command to view your action ID.
+2. Verify that your Schematics action is created and note your action ID that is assigned to your action. You can run following list command to view your action ID.
    ```
    ibmcloud schematics action list
    ```
