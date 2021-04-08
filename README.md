@@ -50,8 +50,6 @@ This playbook demonstrate how to use the Ansible playbook in IBM Cloud Schematic
 | cluster_id | `Enter your cluster ID` |
 | IC_IAM_TOKEN | `Enter your IAM token` |
 | IC_IAM_REFRESH_TOKEN | `Enter your Refresh token` |
-    
-![Sample input variables](/images/iks_inputvariables.png)
 
 7. Click **Save**.
 8. Click **Check action** validates your action details. In case of any issues, you can recheck the configuration and [edit the settings](https://cloud.ibm.com/docs/schematics?topic=schematics-action-setup#action-settings) and recheck an action.
