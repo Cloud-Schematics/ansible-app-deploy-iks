@@ -168,7 +168,7 @@ For debugging purpose create action with [higher verbosity level](https://cloud.
 
 This can be because of subnet or network policies which were used while cluster creation. 
 
-### Why I am getting error `Action Name Should be Unique`?
+### Why I am getting error Action name Should be Unique?
 
 In Schematics no two action can have the same name in an account. Please change the action name. 
 
