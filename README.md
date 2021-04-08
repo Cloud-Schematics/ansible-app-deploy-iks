@@ -44,13 +44,12 @@ This playbook demonstrate how to use the Ansible playbook in IBM Cloud Schematic
 7. Select the **Verbosity** level to control the depth of log information to display. For example, enter `4` to check detailed log information. Refer to [create an action](https://cloud.ibm.com/docs/schematics?topic=schematics-action-setup#create-action) for more information.
 5. Click the **Advanced options** tab.
 6. Enter the input variables in the **Key** and **Value** format. Check **Sensitive**, if you want to protect the text value.
-         | Key | Value |
-         | ---- | ---- |
-         | cluster_id | <Enter your cluster ID> |
-         | IC_IAM_TOKEN | <Enter your IAM token> |
-         | IC_IAM_REFRESH_TOKEN | <Enter your Refresh token> |
-
-    ![Sample input variables](/images/iks_inputvariables.png)
+ | Key | Value |
+ | ---- | ---- |
+ | cluster_id | <Enter your cluster ID> |
+ | IC_IAM_TOKEN | <Enter your IAM token> |
+ | IC_IAM_REFRESH_TOKEN | <Enter your Refresh token> |
+   ![Sample input variables](/images/iks_inputvariables.png)
 7. Click **Save**.
 8. Click **Check action** validates your action details.
 9. Click **Run action** to deploy the Hackathon Starter. You can monitor the progress of an action by reviewing the logs on the **Jobs** page.
