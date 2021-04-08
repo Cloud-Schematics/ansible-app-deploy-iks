@@ -65,7 +65,7 @@ To verify your deployment, continue with verification steps.
 
 **Sample screen capture**
 
-![External endpoint for webapp service](/images/external_IP_webapp.png)
+![External endpoint for webapp service](/images/external_ip_webapp.png)
 
 4. Click the external link icon to view your Hackathon Starter application page. Or optionally, browse the Hackathon Starter web application by using your `External endpoint` IP address, for example,https://155.155.155.155 to view the output as shown in the screen capture.
 
