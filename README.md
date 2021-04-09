@@ -101,11 +101,11 @@ To verify your deployment, continue with verification steps.
    ```
 3. Create a job to validate the action configuration is successful. Replace `<action_ID>` with your action ID.
    ```
-   ibmcloud schematics job create --command-object action --command-object-id <action_ID> --command-name ansible_playbook_check
+   ibmcloud schematics job run --command-object action --command-object-id <action_ID> --command-name ansible_playbook_check
    ```
 4. Create a job to run your action. **Note** Replace `<action_ID>` with the action ID that you retrieved. In your CLI output, note the **ID** that was assigned to your job.
    ```
-   ibmcloud schematics job create --command-object action --command-object-id <action_ID> --command-name ansible_playbook_run
+   ibmcloud schematics job run --command-object action --command-object-id <action_ID> --command-name ansible_playbook_run
    ```
 4. Verify that your job ran successfully by retrieving the logs. You can run `ibmcloud schematics job list` to list your job IDs.
    ```
